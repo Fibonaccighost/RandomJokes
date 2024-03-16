@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random Jokes</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        body {
+            background-color: aquamarine;
+        }
+
+        main {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            gap: 5vh;
+            padding: 5vh 5vw;
+
+        }
+
+        .heading {
+            font-size: 4rem;
+            text-align: center;
+        }
+
+        #btn {
+            background-color: #e2e2dd;
+            color: #080809;
+            width: 40vw;
+            padding: 3vh 10vw;
+            border: 2px solid black;
+            font-size: 2rem;
+            cursor: pointer;
+            border-radius: 2rem;
+        }
+
+        #btn:hover {
+            background-color: #31312f;
+            color: #e7e8ed;
+        }
+
+        #joke p {
+            font-size: 3rem;
+            border: 2px solid black;
+            padding: 3vh 5vw;
+            text-align: center;
+            background-color: #e6dbdb;
+            cursor: pointer;
+            border-radius: 2rem;
+            margin: 4vh 0;
+        }
+
+        #joke p:hover {
+            transform: scale(1.05);
+            transition: ease;
+        }
+    </style>
+</head>
+
+<body>
+    <main>
+        <p class="heading">Random Jokes from Internet</p>
+        <button id="btn">Get Joke</button>
+        <div id="joke">
+        </div>
+    </main>
+    <script src="script.js"></script>
+</body>
+
+</html>
