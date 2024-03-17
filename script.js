@@ -1,35 +1,46 @@
+let jokes = [];
 
-let jokesarr = [
-    "Why don't skeletons fight each other? They don't have the guts!",
-    "Why did the scarecrow win an award? Because he was outstanding in his field!",
-    "What did one plate say to the other plate? Dinner's on me!",
-    "Why did the math book look sad? Because it had too many problems.",
-    "What do you call fake spaghetti? An impasta!",
-    "Why don't scientists trust atoms? Because they make up everything!",
-    "How does a penguin build its house? Igloos it together!",
-    "What do you get when you cross a snowman and a vampire? Frostbite!",
-    "What's orange and sounds like a parrot? A carrot!",
-    "Why did the golfer bring two pairs of pants? In case he got a hole in one!",
-    "What did the grape say when it got stepped on? Nothing, it just let out a little wine!",
-    "Why did the tomato turn red? Because it saw the salad dressing!",
-    "What do you call a fish with no eyes? Fsh!",
-    "How does a cucumber become a pickle? It goes through a jarring experience!",
-    "Why did the bicycle fall over? Because it was two-tired!",
-    "Why don't skeletons fight each other? They don't have the guts!",
-    "Why did the tomato turn red? Because it saw the salad dressing!",
-    "What's the best thing about Switzerland? I don't know, but their flag is a big plus!",
-    "Why did the coffee file a police report? It got mugged!",
-    "Why was the math book sad? Because it had too many problems!",
-]
+function fetchJokes() {
+    var limit = 10;
+    var apiKey = 'ZuyRhYwYrB4NvodU+Gv4iQ==aSwL3XLlr43rAq7T'; // Replace this with your actual API key
 
-function randomjoke() {
-    const jokeindex = Math.floor(Math.random()*jokesarr.length)
-    const randomjoke = jokesarr[jokeindex]
-    return randomjoke
+    $.ajax({
+        method: 'GET',
+        url: 'https://api.api-ninjas.com/v1/jokes?limit=' + limit,
+        headers: { 'X-Api-Key': apiKey },
+        contentType: 'application/json',
+        success: function(result) {
+            console.log(result);
+            jokes = result; // Update the jokes array with the fetched jokes
+        },
+        error: function ajaxError(jqXHR) {
+            console.error('Error: ', jqXHR.responseText);
+        }
+    });
 }
 
-let btn = document.getElementById("btn")
-let joke = document.getElementById("joke")
+function randomJoke() {
+    const jokeIndex = Math.floor(Math.random() * jokes.length);
+    const randomJoke = jokes[jokeIndex];
+    return randomJoke;
+}
+
+// Fetch jokes when the page loads
+fetchJokes();
+
+let btn = document.getElementById("btn");
+let joke = document.getElementById("joke");
+
 btn.addEventListener("click", () => {
-    joke.insertAdjacentHTML("beforeend",`<p>${randomjoke()}</p>`)
-})
+    // Make sure jokes array is not empty before trying to get a random joke
+    if (jokes.length > 0) {
+        const randomJokeObject = randomJoke();
+        if (randomJokeObject.hasOwnProperty('joke')) {
+            joke.innerHTML = `<p>${randomJokeObject.joke}</p>`;
+        } else {
+            joke.innerHTML = "<p>No joke text found for this joke.</p>";
+        }
+    } else {
+        joke.innerHTML = "<p>No jokes available. Please try again later.</p>";
+    }
+});
